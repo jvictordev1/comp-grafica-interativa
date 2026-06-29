@@ -8,8 +8,18 @@ CXX = g++
 # Flags do compilador (ativa avisos e adiciona pasta de headers ao path de busca)
 CXXFLAGS = -Wall -Wextra -std=c++11 -Iinclude
 
-# Bibliotecas do OpenGL e GLUT necessárias para compilação no Linux
-LIBS = -lGL -lGLU -lglut
+# Detecção do Sistema Operacional (OS)
+ifeq ($(OS),Windows_NT)
+    # Configurações para Windows (MinGW/MSYS2)
+    TARGET = simulador.exe
+    LIBS = -lopengl32 -lglu32 -lfreeglut
+    CLEAN_CMD = rm -f $(TARGET) 2>/dev/null || del /q /f $(TARGET) 2>nul || true
+else
+    # Configurações para Linux e outros sistemas Unix-like
+    TARGET = simulador
+    LIBS = -lGL -lGLU -lglut
+    CLEAN_CMD = rm -f $(TARGET)
+endif
 
 # Caminho para os cabeçalhos (.h)
 HEADERS = include/Globals.h \
@@ -28,9 +38,6 @@ SRCS = src/main.cpp \
        src/Curvas.cpp \
        src/UI.cpp
 
-# Nome do executável final gerado
-TARGET = simulador
-
 # Regra principal (padrão)
 all: $(TARGET)
 
@@ -40,6 +47,6 @@ $(TARGET): $(SRCS) $(HEADERS)
 
 # Limpeza de arquivos compilados
 clean:
-	rm -f $(TARGET)
+	$(CLEAN_CMD)
 
 .PHONY: all clean

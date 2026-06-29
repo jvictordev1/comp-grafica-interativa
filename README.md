@@ -10,35 +10,47 @@ O objetivo do simulador é auxiliar no aprendizado ativo de computação gráfic
 
 ### 1. Requisitos do Sistema
 
-Para executar o simulador no Linux (Ubuntu/Debian e derivados), certifique-se de instalar as dependências de desenvolvimento do compilador C++, Make e as bibliotecas gráficas do OpenGL, GLU e FreeGLUT.
-
-Execute o seguinte comando no terminal para instalar todos os pacotes necessários:
+#### Linux (Ubuntu/Debian e derivados)
+Certifique-se de instalar as dependências de desenvolvimento do compilador C++, Make e as bibliotecas gráficas do OpenGL, GLU e FreeGLUT. Execute o seguinte comando no terminal:
 
 ```bash
 sudo apt-get update
 sudo apt-get install build-essential freeglut3-dev libgl1-mesa-dev libglu1-mesa-dev
 ```
 
+#### Windows (via MSYS2 / MinGW)
+1. Instale o gerenciador de pacotes [MSYS2](https://www.msys2.org/).
+2. Abra o terminal **MSYS2 MinGW 64-bit** e instale o compilador g++, make e as bibliotecas do FreeGLUT com o comando:
+   ```bash
+   pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-freeglut make
+   ```
+3. Certifique-se de executar os comandos de compilação dentro do terminal do MinGW ou adicione a pasta de binários (geralmente `C:\msys64\mingw64\bin`) ao `PATH` do seu Windows.
+
 ### 2. Compilação
 
-Com as dependências instaladas, navegue até a raiz do projeto e execute o comando `make` utilizando o arquivo utilitário de build:
+Com as dependências instaladas, navegue até a raiz do projeto e execute o comando `make`:
 
 ```bash
-# Compila todos os arquivos e gera o executável 'simulador'
+# Compila o projeto detectando o SO e gerando 'simulador' (Linux) ou 'simulador.exe' (Windows)
 make
 ```
 
 ### 3. Execução
 
-Para iniciar o simulador, execute o executável gerado:
+Para iniciar o simulador, execute o executável correspondente ao seu sistema operacional:
 
-```bash
-./simulador
-```
+- **No Linux**:
+  ```bash
+  ./simulador
+  ```
+- **No Windows**:
+  ```bash
+  ./simulador.exe
+  ```
 
 ### 4. Limpeza
 
-Para remover o executável compilado e limpar o espaço de build:
+Para remover o executável compilado e limpar os arquivos temporários:
 
 ```bash
 make clean
